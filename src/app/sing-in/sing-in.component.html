@@ -1,0 +1,42 @@
+<div class="row g-0 vh-100 position-relative sign-up">
+    <div class="col-md-6 p-5 position-relative d-flex flex-column justify-content-between">
+        <div class="logo text-primary d-flex align-items-center">
+            <img src="assets/images/logo-black.svg" class="flex-shrink-0">
+            <span class="fs-5 ms-2 fw-bold">Untitled</span>
+        </div>
+        <div class="form-wrapper mx-auto">
+            <p-toast></p-toast>
+            <app-loader *ngIf="isLoading"></app-loader>
+            <div class="section-title">
+                <h2 class="mb-2">Welcome back</h2>
+                <p class="text-muted opacity-75">Welcome back! Please enter your details.</p>
+            </div>
+            <form class="form mt-4" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                <div class="form-group mb-3">
+                    <label class="d-block mb-1" for="email">Email</label>
+                    <input pInputText class="p-inputtext-sm form-control w-100" type="text" name="email"
+                        formControlName="email" id="email" placeholder="Enter your email">
+                </div>
+                <div class="form-group mb-3">
+                    <label class="d-block mb-1" for="password">Password</label>
+                    <input pInputText class="p-inputtext-sm form-control w-100" type="password" name="password"
+                        formControlName="password" id="password" placeholder="Enter your password">
+                </div>
+                <div class="form-error" *ngIf="errorMessage">
+                    <small id="username-help" class="p-error d-block mb-3">{{ errorMessage }}</small>
+                </div>
+                <div class="form-group">
+                    <button type="submit" [disabled]="!loginForm.valid"
+                        class="p-button p-button-primary d-block w-100">Sign In</button>
+                </div>
+                <div class="form-group text-muted text-center mt-3">
+                    <span class="opacity-75">Don't have an account?</span> &nbsp;<a class="text-decoration-none"
+                        routerLink="/sign-up">Sign up</a>
+                </div>
+            </form>
+        </div>
+        <div class="site-footer fs-small text-muted opacity-75">
+            &copy; Untitled, 2023
+        </div>
+    </div>
+</div>

@@ -1,0 +1,171 @@
+<!-- Sidebar -->
+<form [formGroup]="taskForm" (ngSubmit)="submitForm()">
+    <p-sidebar position="right" styleClass="custom-sidebar" [dismissible]="false" [closeOnEscape]="false"
+        [(visible)]="visible" (visibleChange)="onHide($event)">
+        <ng-template pTemplate="header">
+            <span class="fw-semibold" *ngIf="!isEditing; else editingTitle">Add a new task</span>
+            <ng-template #editingTitle>
+                <span class=" fw-semibold">Update the task</span>
+            </ng-template>
+        </ng-template>
+        <ng-template pTemplate="content">
+            <div class="top-group mb-3">
+                <div class="form-group">
+                    <input type="text" formControlName="title" pInputText pAutoFocus [autofocus]="true"
+                        class="w-100 form-control border-0 fs-1 fw-bold pt-0 px-0 shadow-none"
+                        placeholder="Add your task name">
+                </div>
+                <div class="error-message" *ngIf="(isFormSubmitted && isRequired('title')) || isRequired('title')">This
+                    field is required.</div>
+            </div>
+            <div class="form-group mb-3">
+                <div class="text-muted fw-medium mb-2">Due Date</div>
+                <div class="form-group--control">
+                    <p-calendar class="d-block" formControlName="due_date"
+                        dateFormat="dd M yy" styleClass="d-block"></p-calendar>
+                    <div class="error-message mt-2"
+                        *ngIf="(isFormSubmitted && isRequired('due_date')) || isRequired('due_date')">
+                        This field is required.</div>
+                </div>
+            </div>
+            <div class="form-group mb-3">
+                <div class="text-muted fw-medium mb-2">Status</div>
+                <div class="form-group--control">
+                    <p-dropdown [options]="status" class="d-block" formControlName="status"
+                        (onChange)="onStatusChange($event, false)" optionLabel="name"></p-dropdown>
+                    <div class="error-message mt-2"
+                        *ngIf="(isFormSubmitted && isRequired('status')) || isRequired('status')">
+                        This field is required.</div>
+                </div>
+            </div>
+            <div class="form-group mb-3">
+                <p-tabView>
+                    <p-tabPanel header="Description">
+                        <div class="form-group">
+                            <textarea pInputTextarea formControlName="description"
+                                class="p-inputtext p-inputtextarea w-100 form-control p-3"
+                                placeholder="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ut a dolorem recusandae placeat debitis. Quos dicta excepturi ad dolorem ex?"></textarea>
+                            <div class="error-message mt-2"
+                                *ngIf="(isFormSubmitted && isRequired('description')) || isRequired('description')">
+                                This field is required.</div>
+                        </div>
+                        <div class="form-group">
+                            <div class="py-3 d-flex border-bottom align-items-center">
+                                <div class="text-muted opacity-75 fw-medium me-3">Subtasks</div>
+                                <a href="javascript:void(0)" (click)="isOpen = !isOpen"
+                                    class="fs-small fw-medium text-accent text-uppercase text-decoration-none d-inline-flex align-items-center">
+                                    <span class="pi pi-plus-circle me-1"></span>
+                                    <span>Add Subtask</span>
+                                </a>
+                            </div>
+                            <ul formArrayName="sub_tasks" *ngIf="subTasks.controls.length; else emptyState;"
+                                class="list-group my-3">
+                                <li class="list-group--item d-flex align-items-center justify-content-between"
+                                    *ngFor="let task of subTasks.controls; let i = index" (click)="openSubTask(i)">
+                                    <div class="list-group--item-left d-flex align-items-center">
+                                        <i class="pi pi-file"></i>
+                                        <span class="mx-3 ms-2">{{task.value.title}}</span>
+                                        <p-badge severity="info" [value]="task.value.status.name"></p-badge>
+                                    </div>
+                                    <i class="pi pi-times" (click)="onRemoveSubTask(i, $event)"></i>
+                                </li>
+                            </ul>
+                            <ng-template #emptyState>
+                                <div class="p-3 empty-state-wrapper">
+                                    <p class="empty-state-wrapper--text text-muted opacity-75">No Subtasks Found</p>
+                                </div>
+                            </ng-template>
+                        </div>
+                        <div class="form-group">
+                            <div class="py-3 d-flex border-bottom align-items-center">
+                                <div class="text-muted opacity-75 fw-medium me-3">Attachments</div>
+                                <a href="javascript:void(0)"
+                                    class="fs-small fw-medium text-accent text-uppercase text-decoration-none d-inline-flex align-items-center">
+                                    <span class="pi pi-cloud-upload me-1"></span>
+                                    <span>Upload</span>
+                                </a>
+                            </div>
+                            <div class="p-3 empty-state-wrapper">
+                                <p class="empty-state-wrapper--text text-muted opacity-75">No Attachments Found</p>
+                            </div>
+                        </div>
+                    </p-tabPanel>
+                    <p-tabPanel header="Comments">
+                        <p>
+                            Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
+                            laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi
+                            architecto beatae vitae dicta sunt explicabo. Nemo enim
+                            ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur
+                            magni dolores eos qui ratione voluptatem sequi nesciunt. Consectetur, adipisci velit, sed
+                            quia non numquam eius modi.
+                        </p>
+                    </p-tabPanel>
+                    <p-tabPanel header="Activities" [disabled]="true"></p-tabPanel>
+                </p-tabView>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="footer">
+            <div class="d-flex align-items-center justify-content-between">
+                <div class="user-info">
+                    <div class="text-muted fs-small fw-medium mb-2">Created By</div>
+                    <p-chip [label]="userName" image="assets/images/user.png"></p-chip>
+                </div>
+                <button type="submit" class="p-button p-button-accent">
+                    <span *ngIf="!isEditing; else updateText">Create Task</span>
+                    <ng-template #updateText>
+                        <span>Update Task</span>
+                    </ng-template>
+                </button>
+            </div>
+        </ng-template>
+    </p-sidebar>
+</form>
+
+<form [formGroup]="subTaskForm" (ngSubmit)="addSubTask()">
+    <p-dialog [modal]="true" styleClass="custom-modal" [draggable]="false" [(visible)]="isOpen"
+        (onHide)="onDialogHide()" (onShow)="onDialogShow()">
+        <ng-template pTemplate="header">
+            <span class="fw-semibold">Add a new sub task</span>
+        </ng-template>
+        <ng-template pTemplate="content">
+            <div class="row">
+                <div class="col-12 col-md-6">
+                    <div class="form-group mb-3">
+                        <div class="text-muted fw-medium mb-2">Name</div>
+                        <input type="text" formControlName="title" pInputText pAutoFocus [autofocus]="true"
+                            class="w-100 form-control" placeholder="Add your task name">
+                        <div class="error-message mt-2"
+                            *ngIf="(isSubTaskFormSubmitted && isRequired('title', true)) || isRequired('title', true)">
+                            This field is required.</div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <div class="form-group">
+                        <div class="text-muted fw-medium mb-2">Status</div>
+                        <div class="form-group--control">
+                            <p-dropdown appendTo="body" [options]="status" class="d-block" formControlName="status"
+                                (onChange)="onStatusChange($event, true)" optionLabel="name"></p-dropdown>
+                            <div class="error-message mt-2"
+                                *ngIf="(isSubTaskFormSubmitted && isRequired('status', true)) || isRequired('status', true)">
+                                This field is required.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="text-muted fw-medium mb-2">Description</div>
+                <textarea pInputTextarea formControlName="description"
+                    class="p-inputtext p-inputtextarea w-100 form-control p-3"
+                    placeholder="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ut a dolorem recusandae placeat debitis."></textarea>
+                <div class="error-message mt-2"
+                    *ngIf="(isSubTaskFormSubmitted && isRequired('description', true)) || isRequired('description', true)">
+                    This field is required.</div>
+            </div>
+
+        </ng-template>
+        <ng-template pTemplate="footer">
+            <button type="submit" class=" p-button m-0 p-button-accent">Save</button>
+        </ng-template>
+    </p-dialog>
+</form>

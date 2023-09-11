@@ -1,0 +1,6 @@
+<div class="d-flex flex-column vh-100">
+  <app-main-content *ngIf="isLoggedIn;else routerContent" class="main h-100"></app-main-content>
+  <ng-template #routerContent>
+    <router-outlet></router-outlet>
+  </ng-template>
+</div>

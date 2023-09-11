@@ -1,0 +1,25 @@
+<div class="board-view row h-100 flex-nowrap" cdkDropListGroup>
+    <div class="col-12 col-md-4 board-column" *ngFor="let view of viewList">
+        <div class="board-column__inner h-100 p-3 rounded overflow-auto" cdkDropList [cdkDropListData]="view.tasks"
+            [id]="view.slug" [cdkDropListConnectedTo]="connectedContainersList" (cdkDropListDropped)="drop($event)">
+            <div class="board-column__top mb-3 fw-bold  d-flex align-items-center justify-content-between">
+                <span class="board-column__title text-muted opacity-50">{{view.name}} ({{view.tasks &&
+                    view.tasks.length}})</span>
+                <a href="javascript:void(0)" (click)="openSidebar(view)"
+                    class="board-column__btn text-decoration-none d-flex align-items-center">
+                    <span class="board-column__btn-icon pi pi-plus-circle me-2"></span>
+                    Add new task
+                </a>
+            </div>
+            <app-board-card *ngFor="let item of view.tasks" class="cursor-pointer" (viewItem)="onView($event)"
+                [cdkDragData]="item" :key="item.id" [taskItem]="item" (editItem)="onEdit($event)"
+                (deleteItem)="onDelete($event)" cdkDrag></app-board-card>
+        </div>
+    </div>
+</div>
+
+<app-add-new-task *ngIf="isSidebarOpen" [status]="allViews" [visible]="isSidebarOpen" [selectedView]="selectedView"
+    [totalTask]="totalTask" [selectedTask]="selectedTask" (onAddTask)="onAddTask($event)"
+    (onEditTask)="onEditTask($event)" (onSidebarClose)="onSidebarClose($event)"></app-add-new-task>
+
+<app-view-task></app-view-task>

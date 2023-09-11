@@ -1,0 +1,42 @@
+<div class="row">
+    <div class="col-12 col-md-8">
+        <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+            <div class="form-group mb-2">
+                <label class="d-block mb-1" for="username">Username</label>
+                <input type="text" pInputText placeholder="Enter Username" formControlName="username" id="username"
+                    class="form-control"
+                    [ngClass]="!signupForm.get('username')?.valid  && signupForm.get('username')?.touched ? 'border-danger': ''">
+                <div class="text-danger"
+                    *ngIf="!signupForm.get('username')?.valid  && signupForm.get('username')?.touched">
+                    <small>This field is required.</small>
+                </div>
+            </div>
+            <div class="form-group mb-2">
+                <label class="d-block mb-1" for="email">Email</label>
+                <input type="text" pInputText placeholder="Enter Email" formControlName="email" id="email"
+                    class="form-control"
+                    [ngClass]="!signupForm.get('email')?.valid  && signupForm.get('email')?.touched ? 'border-danger': ''">
+                <div class="text-danger" *ngIf="!signupForm.get('email')?.valid && signupForm.get('email')?.touched">
+                    <small>This field is required.</small>
+                </div>
+            </div>
+            <div class="field-checkbox d-flex align-items-center mb-2" *ngFor="let gender of genders; let i = index;">
+                <input type="radio" formControlName="gender" [value]="gender" [id]="gender">
+                <label [for]="gender" class="ms-2">{{gender}}</label>
+            </div>
+            <div class="my-4" formArrayName="hobbies">
+                <h4>Your Hobbies</h4>
+                <div class="form-group my-2">
+                    <button class="p-button p-button-secondary" type="button" (click)="addHobbies()">Add
+                        Hobbies</button>
+                </div>
+                <div class="form-group mb-2" *ngFor="let item of getHobbies(); let i = index">
+                    <input pInputText type="text" class="form-control" [formControlName]="i">
+                </div>
+            </div>
+            <div class="form-group mb-2">
+                <button type="submit" class="p-button">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
