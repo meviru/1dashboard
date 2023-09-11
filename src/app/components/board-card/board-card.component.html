@@ -1,0 +1,53 @@
+<div class="card mb-3 p-3 d-flex flex-column bg-white rounded" *ngIf="!taskItem">
+    <p-skeleton styleClass="mb-1" width="10.5rem"></p-skeleton>
+    <p-skeleton></p-skeleton>
+    <div class="d-flex align-items-center justify-content-between mt-4">
+        <p-skeleton width="5rem" height="15px" styleClass="mb-2"></p-skeleton>
+        <p-skeleton width="1.5rem" height="15px" styleClass="mb-2"></p-skeleton>
+    </div>
+    <p-skeleton height="4px"></p-skeleton>
+    <div class="d-flex align-items-center justify-content-between mt-4">
+        <div class="left-skeleton">
+            <p-skeleton width="8.25rem" height="2rem" borderRadius="50px"></p-skeleton>
+        </div>
+        <div class="right-skeleton d-flex align-items-center">
+            <p-skeleton shape="circle" size="2rem" styleClass="me-2"></p-skeleton>
+            <p-skeleton shape="circle" size="2rem"></p-skeleton>
+        </div>
+    </div>
+</div>
+<div class="card mb-3 p-3 d-flex flex-column bg-white rounded">
+    <div class="card-header p-0 bg-white border-0 d-flex align-items-center justify-content-between">
+        <div class="card-header__title overflow-hidden pe-2 flex-grow-1">
+            <h3 class="card-title mb-1 fs-6 fw-bold">{{taskItem.title}}</h3>
+            <h4 class="card-subtitle fw-normal text-truncate text-muted opacity-75">{{taskItem.description}}</h4>
+        </div>
+        <a href="javascript:void(0)" (click)="menu.toggle($event)"
+            class="card-header__menu text-decoration-none d-flex align-items-center justify-content-between border rounded-circle flex-shrink-0">
+            <span class="card-header__menu-icon pi pi-ellipsis-h"></span>
+        </a>
+        <p-menu #menu appendTo="body" [model]="items" [popup]="true"></p-menu>
+    </div>
+    <div class="card-body py-4 px-0 flex-grow-1">
+        <div class="progress-status fw-bold mb-1 d-flex align-items-center justify-content-between">
+            <div class="progress-status__inner text-muted d-flex align-items-center">
+                <span class="progress-status__icon pi pi-list"></span>
+                <span class="progress-status__text ms-2">Progress</span>
+            </div>
+            <div class="progress-counter">{{taskItem.completed_count}}/{{taskItem.total_count}}</div>
+        </div>
+        <div class="progress">
+            <p-progressBar class="progress-bar" [showValue]="false" [value]="getProgress" [style]="{ height: '4px' }"
+                [color]="getProgress == 100 ? 'green': 'orange'"></p-progressBar>
+        </div>
+    </div>
+    <div class="card-footer p-0 bg-white border-0 d-flex justify-content-between">
+        <span class="badge rounded-pill p-2 px-3">{{taskItem.due_date | date:'yyyy-MM-dd'}}</span>
+        <div class="card-footer__counter d-flex align-items-center text-muted opacity-75 fw-bold">
+            <div class="counter-item d-flex align-items-center me-3"><span
+                    class="counter-item__icon pi pi-comments me-1"></span>5</div>
+            <div class="counter-item d-flex align-items-center"><span
+                    class="counter-item__icon pi pi-paperclip me-1"></span>2</div>
+        </div>
+    </div>
+</div>

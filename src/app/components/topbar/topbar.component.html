@@ -1,0 +1,52 @@
+<div class="topbar bg-white d-flex align-items-center justify-content-between px-4">
+    <div class="topbar-left">
+        <h2 class="topbar-title fs-5 fw-bold m-0">Welcome back, {{userName}} 👋</h2>
+    </div>
+    <div class="topbar-right">
+        <ul class="d-flex align-items-center topbar-menu list-inline m-0">
+            <li class="topbar-menu__item">
+                <a href="javascript:void(0)" class="topbar-menu__link d-block">
+                    <span class="topbar-menu__icon pi pi-search"></span>
+                </a>
+            </li>
+            <li class="topbar-menu__item ms-4">
+                <a href="javascript:void(0)" class="topbar-menu__link d-block position-relative">
+                    <span class="topbar-menu__icon pi pi-bell"></span>
+                    <span class="position-absolute top-0 start-50 p-1 bg-warning border border-white rounded-circle">
+                        <span class="visually-hidden">New alerts</span>
+                    </span>
+                </a>
+            </li>
+            <li class="topbar-menu__item ms-4">
+                <a href="javascript:void(0)" class="topbar-menu__link text-decoration-none d-flex align-items-center">
+                    <span class="topbar-menu__icon pi pi-calendar"></span>
+                    <span class="text-muted fw-bold opacity-75 ms-2">{{today | date:'dd MMM yyyy'}}</span>
+                </a>
+            </li>
+            <li class="topbar-menu__item ms-4">
+                <a href="javascript:void(0)" (click)="menu.toggle($event)" class="topbar-menu__link d-block">
+                    <img src="assets/images/user.png" alt="Vincent Patel" class="rounded-circle">
+                </a>
+                <p-menu #menu [model]="items" [popup]="true"></p-menu>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="board-top bg-white px-4 d-flex align-items-center justify-content-between">
+    <ul class="board-tabs list-inline m-0 d-flex align-items-center">
+        <li class="board-tabs__item me-4">
+            <a href="javascript:void(0)"
+                class="board-tabs__link fw-bold pb-3 d-flex active align-items-center text-decoration-none">
+                <span class="board-tabs__icon pi pi-table"></span>
+                <span class="board-tabs__text ms-2">Board View</span>
+            </a>
+        </li>
+        <li class="board-tabs__item me-4">
+            <a href="javascript:void(0)"
+                class="board-tabs__link fw-bold pb-3 d-flex align-items-center text-decoration-none text-muted opacity-50">
+                <span class="board-tabs__icon pi pi-plus-circle"></span>
+                <span class="board-tabs__text ms-2">Add View</span>
+            </a>
+        </li>
+    </ul>
+</div>
