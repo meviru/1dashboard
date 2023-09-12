@@ -22,4 +22,5 @@
     [totalTask]="totalTask" [selectedTask]="selectedTask" (onAddTask)="onAddTask($event)"
     (onEditTask)="onEditTask($event)" (onSidebarClose)="onSidebarClose($event)"></app-add-new-task>
 
-<app-view-task></app-view-task>
+<app-view-task *ngIf="isViewMode" [visible]="isViewMode" [task]="selectedTask"
+    (onClose)="onViewModeClose($event)"></app-view-task>

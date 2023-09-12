@@ -330,6 +330,11 @@ button {
     &.custom-sidebar {
         width: 600px;
         max-width: 100%;
+        &.hide-footer {
+            .p-sidebar-footer {
+                display: none;
+            }
+        }
         .p-sidebar-footer {
             border-top: 1px solid $border-color;
         }

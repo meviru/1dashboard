@@ -72,8 +72,8 @@ export class AddNewTaskComponent {
     this.userSub = this.authService.user.subscribe((userData: User) => {
       this.userData = userData;
       if (userData && userData.email) {
-        const atToken = userData.email.indexOf("@");
-        this.userName = userData.email.substring(0, atToken);
+        const atIndex = userData.email.indexOf("@");
+        this.userName = userData.email.substring(0, atIndex);
       }
     });
 

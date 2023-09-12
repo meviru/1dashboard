@@ -36,8 +36,7 @@ export class BoardViewComponent {
   public totalTask: number = 0;
 
   public isSidebarOpen: boolean = false;
-  public isView: boolean = false;
-
+  public isViewMode: boolean = false;
 
   taskSubscription: Subscription;
 
@@ -115,12 +114,16 @@ export class BoardViewComponent {
 
   onView(id: string) {
     this.selectedTask = this.selectTask(id);
-    console.log(this.selectedTask);
+    this.isViewMode = true;
+  }
+
+  onViewModeClose(isVisible: boolean) {
+    this.isViewMode = !isVisible;
   }
 
   onEdit(id: string) {
     this.selectedTask = this.selectTask(id);
-    const view: any = { ...this.selectedTask };
+    const view: any = { ...this.selectedTask.status };
     this.openSidebar(view, this.selectedTask);
   }
 
