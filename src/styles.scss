@@ -239,6 +239,21 @@ button {
     &__icon {
         font-size: $font-size-base * 1.25;
     }
+    &__user {
+        width: 36px;
+        height: 36px;
+        line-height: 36px;
+        border-radius: 100%;
+        border: 1px solid $border-color;
+        background-color: $primary;
+    }
+    .user-initial {
+        font-size: $font-size-base * 1.375;
+        font-weight: 400;
+        color: $white;
+        display: block;
+        text-transform: uppercase;
+    }
 }
 
 .main-content {

@@ -24,8 +24,14 @@
                 </a>
             </li>
             <li class="topbar-menu__item ms-4">
-                <a href="javascript:void(0)" (click)="menu.toggle($event)" class="topbar-menu__link d-block">
-                    <img src="assets/images/user.png" alt="Vincent Patel" class="rounded-circle">
+                <a href="javascript:void(0)" (click)="menu.toggle($event)"
+                    class="topbar-menu__link text-center topbar-menu__user d-block text-decoration-none">
+                    <ng-container *ngIf="!initial; else userInitial">
+                        <img src="assets/images/user.png" [alt]="userName" class="rounded-circle">
+                    </ng-container>
+                    <ng-template #userInitial>
+                        <span class="user-initial">{{initial}}</span>
+                    </ng-template>
                 </a>
                 <p-menu #menu [model]="items" [popup]="true"></p-menu>
             </li>

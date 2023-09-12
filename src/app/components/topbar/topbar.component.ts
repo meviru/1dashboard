@@ -41,6 +41,11 @@ export class TopbarComponent {
       }
     ]
   }
+
+  get initial() {
+    return this.userName.substring(0, 1);
+  }
+
   ngOnDestroy(): void {
     if (this.userSub) {
       this.userSub.unsubscribe();
