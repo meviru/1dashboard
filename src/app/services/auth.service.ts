@@ -103,7 +103,7 @@ export class AuthService {
         errorMessage = "This account does not exist."
         break;
       case "INVALID_PASSWORD":
-        errorMessage = "Your email or password is invalid."
+        errorMessage = "Your email or password is incorrect."
         break;
       case "USER_DISABLED":
         errorMessage = "Your account has been disabled."
