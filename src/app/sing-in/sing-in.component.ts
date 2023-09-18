@@ -41,8 +41,15 @@ export class SignInComponent {
     })
   }
 
+  markFieldAsDirty(form: FormGroup) {
+    for (let i in form.controls) {
+      form.controls[i].markAsDirty();
+    }
+  }
+
   onSubmit() {
     if (!this.loginForm.valid) {
+      this.markFieldAsDirty(this.loginForm);
       return
     }
 
